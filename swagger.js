@@ -9,7 +9,7 @@ const options = {
             description: 'API for managing teachers and students',
         },
     },
-    apis: ['./internal/module/teacher/handler.js'],
+    apis: ['./internal/module/teacher/route.js'],
 };
 
 module.exports = swaggerJsdoc(options);

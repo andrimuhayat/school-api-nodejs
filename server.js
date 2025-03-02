@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const teacherRoutes = require('./internal/module/teacher/handler');
+const teacherRoutes = require('./internal/module/teacher/route');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 
+require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 

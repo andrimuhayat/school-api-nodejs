@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: school_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: bc09s
+    ports:
+      - "7001:3306"
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - db:/var/lib/mysql
+
+  app:
+    image: school-api-node:latest
+    container_name: school-api-node
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    expose:
+      - 3000
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - TZ=Asia/Jakarta
+      - DB_HOST=host.docker.internal
+      - DB_PORT=7001
+      - DB_NAME=school_db
+      - DB_USER=user
+      - DB_PASS=bc09s
+      - PORT=3000
+    links:
+      - db
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  webnet:
+    external: true
