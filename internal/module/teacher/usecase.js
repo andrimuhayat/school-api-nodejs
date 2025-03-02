@@ -17,7 +17,7 @@ class TeacherUseCase {
     }
 
     async suspendStudent(email) {
-        const student = await teacherRepository.findOneByEmail(email)
+        const student = await teacherRepository.findOneStudentByEmail(email)
         if (!student) {
             throw {status: 400, message: `student is not found`};
         }

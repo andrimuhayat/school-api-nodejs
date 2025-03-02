@@ -85,7 +85,7 @@ class TeacherRepository {
     }
 
 
-    async findOneByEmail(email) {
+    async findOneStudentByEmail(email) {
         try {
             return await db("students").where({email}).first();
         } catch (error) {
