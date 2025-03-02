@@ -30,8 +30,9 @@ Following Clean Architecture principles, the service is structured into the foll
 - Automated testing with Jest
 
 ## Environment Variables
+**note: This is for development only!**
+
 The backend environment is configured using a `.env` file:
-**note: this is for development only!**
 
 ```env
 DB_HOST=host.docker.internal
@@ -49,24 +50,25 @@ This project uses Knex for database migrations. Migration scripts should be plac
 Run the following command to create a new migration:
 
 ```sh
-npx knex migrate:make migration_name
+npm knex migrate:make migration_name
 ```
 
 Run the migrations:
 
 ```sh
-npx knex migrate:latest
+npm knex migrate:latest
 ```
 
 Rollback the last migration:
 
 ```sh
-npx knex migrate:rollback
+npm knex migrate:rollback
 ```
 
-## 🏗️ How To Run
-### Run Locally
+## 🏗️ How To Run(Prefer run with Docker)
+### 1. Run Locally without Docker
 1. Clone the repository
+
 2. Install dependencies:
 
    ```sh
@@ -74,11 +76,8 @@ npx knex migrate:rollback
    ```
 
 3. Set up the `.env` file based on `.env.example`
-4. Start the database using Docker:
 
-   ```sh
-   docker-compose up -d
-   ```
+4. Execute schema.sql in your database
 
 5. Run the application:
 
@@ -86,7 +85,7 @@ npx knex migrate:rollback
    npm run dev
    ```
 
-### Run with Docker
+### 2. Run with Docker (recommended)
 ```sh
 docker-compose up --build
 ```
@@ -111,5 +110,11 @@ Once the service is running, you can access the Swagger API documentation at:
 
 ```
 http://0.0.0.0:3000/api-docs
+```
+
+## PUBLIC ACCESS URL 
+
+```
+http://194.233.91.112:30886/api-docs
 ```
 
