@@ -1,6 +1,6 @@
-# Payment Service
+# School API
 ### Version: 1.0.0
-Payment Service is responsible for consuming and processing data from the Finance Service. This service facilitates interconnection between AMS and SAP PTMN PERSERO.
+Teachers need a system where they can perform administrative functions for their students. Teachers and students are identified by their email addresses.
 
 ## Code Architecture
 This service follows a clean separation of concerns based on [Uncle Bob's Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/The-Clean-Architecture.html).
