@@ -11,27 +11,6 @@ describe("Teacher Use Case", () => {
         await teacherRepository.registerStudents("masterteacher@example.com", ["student3@example.com", "student4@example.com"])
     });
 
-    // Test: Register Students
-    describe("registerStudents", () => {
-        test("should call repository with correct parameters", async () => {
-            teacherRepository.registerStudents.mockResolvedValue(undefined);
-
-            await expect(teacherUseCase.registerStudents("teacher@example.com", ["student1@example.com"]))
-                .resolves.not.toThrow();
-
-            expect(teacherRepository.registerStudents).toHaveBeenCalledWith(
-                "teacher@example.com",
-                ["student1@example.com"]
-            );
-        });
-
-        test("should throw 500 error if repository fails", async () => {
-            // teacherRepository.registerStudents.mockRejectedValue(new Error("DB error"));
-
-            await expect(teacherUseCase.registerStudents("teacher@example.com", ["student1@example.com"]))
-                .rejects.toEqual({status: 500, message: "Database error: Failed to register students"});
-        });
-    });
 
     // Test: Get Common Students
     describe("getCommonStudents", () => {
@@ -55,7 +34,7 @@ describe("Teacher Use Case", () => {
         });
 
         test("should throw 500 error if repository fails", async () => {
-            teacherRepository.getCommonStudents.mockRejectedValue(new Error("DB error"));
+            teacherRepository.getCommonStudents.mockRejectedValue({status: 500, message: "Database error: Failed to fetch common students"});
 
             await expect(teacherUseCase.getCommonStudents(["teacher1@example.com"]))
                 .rejects.toEqual({status: 500, message: "Database error: Failed to fetch common students"});
@@ -85,7 +64,7 @@ describe("Teacher Use Case", () => {
         });
 
         test("should throw 500 error if repository fails", async () => {
-            // teacherRepository.findOneByEmail.mockRejectedValue(new Error("DB error"));
+            teacherRepository.findOneStudentByEmail.mockRejectedValue({status: 500, message: "Database error: Failed to suspend student"});
 
             await expect(teacherUseCase.suspendStudent("student1@example.com"))
                 .rejects.toEqual({status: 500, message: "Database error: Failed to suspend student"});
@@ -153,13 +132,34 @@ describe("Teacher Use Case", () => {
         });
 
         test("should throw 500 error if repository fails", async () => {
-            // teacherRepository.retrieveForNotifications.mockRejectedValue(new Error("DB error"));
+            teacherRepository.retrieveForNotifications.mockRejectedValue({status: 500, message: "Database error: Failed to retrieve notifications"});
 
             await expect(
                 teacherUseCase.retrieveForNotifications("teacher@example.com", "Hey @student1@example.com")
             ).rejects.toEqual({status: 500, message: "Database error: Failed to retrieve notifications"});
 
             expect(teacherRepository.retrieveForNotifications).toHaveBeenCalledWith("teacher@example.com", ["student1@example.com"]);
+        });
+    });
+    // Test: Register Students
+    describe("registerStudents", () => {
+        test("should call repository with correct parameters", async () => {
+            teacherRepository.registerStudents.mockResolvedValue(undefined);
+
+            await expect(teacherUseCase.registerStudents("teacher@example.com", ["student1@example.com"]))
+                .resolves.not.toThrow();
+
+            expect(teacherRepository.registerStudents).toHaveBeenCalledWith(
+                "teacher@example.com",
+                ["student1@example.com"]
+            );
+        });
+
+        test("should throw 500 error if repository fails", async () => {
+            teacherRepository.registerStudents.mockRejectedValue({status: 500, message: "Database error: Failed to register students"});
+
+            await expect(teacherUseCase.registerStudents("teacher@example.com", ["student1@example.com"]))
+                .rejects.toEqual({status: 500, message: "Database error: Failed to register students"});
         });
     });
 });
