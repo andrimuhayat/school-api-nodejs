@@ -28,7 +28,6 @@ class TeacherRepository {
             await trx.commit();
         } catch (error) {
             await trx.rollback();
-            if (error.status) throw error;
             throw {status: 500, message: "Database error: Failed to register students"};
         }
     }
